@@ -1,7 +1,7 @@
-# 📘 LearnHub — Member 1: Ashiqur Rahman Shohag (Roll 2203034)
+# 📘 LearnHub — Member 1: Ashiqur Rahman (Roll 2203034)
 ## Complete Technical Codebase, Architecture & Self-Contained Restoration Guide
 
-> **Author**: Ashiqur Rahman Shohag  
+> **Author**: Ashiqur Rahman  
 > **Roll / Student ID**: 2203034  
 > **Course**: CSE 3206 (Software Engineering Sessional)  
 > **Department**: Computer Science & Engineering, RUET  

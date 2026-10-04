@@ -371,7 +371,7 @@ const htmlContent = `<!DOCTYPE html>
     <div class="meta-col">
       <h3>Submitted By (Team Noob)</h3>
       <div class="meta-person">
-        <strong>Ashiqur Rahman Shohag</strong>
+        <strong>Ashiqur Rahman</strong>
         <span>Roll / ID: <strong>2203034</strong> (Member 1)</span>
       </div>
       <div class="meta-person">
@@ -408,7 +408,7 @@ We hereby certify that this laboratory report titled <strong>"LearnHub: A Scalab
 
 <div class="signature-grid">
   <div class="signature-box">
-    <strong>Ashiqur Rahman Shohag</strong><br>Roll: 2203034 | Member 1
+    <strong>Ashiqur Rahman</strong><br>Roll: 2203034 | Member 1
   </div>
   <div class="signature-box">
     <strong>Talha Jubair</strong><br>Roll: 2203035 | Member 2
@@ -729,7 +729,7 @@ SQLite is initialized with Write-Ahead Logging (<code>PRAGMA journal_mode = WAL;
   <span class="ch-num">Chapter 5</span>
 </h1>
 
-<h2 class="section-title">5.1 Member 1 — Ashiqur Rahman Shohag (Roll: 2203034)</h2>
+<h2 class="section-title">5.1 Member 1 — Ashiqur Rahman (Roll: 2203034)</h2>
 <p><strong>Assigned Modules: Assessment Engine, Verifiable Certification, and Learning Analytics</strong></p>
 <p>
 Shohag architected the objective assessment and cryptographic credential subsystems. Figure 5.1 depicts the evaluation and certification pipeline flowchart.
@@ -802,11 +802,11 @@ Md. Rofaz Hasan Rafiu engineered the peer review module with 5-star distribution
       </tr>
     </thead>
     <tbody>
-      <tr><td>MCQ Assessment Engine</td><td>Ashiqur Rahman Shohag</td><td>2203034</td><td>Backend &amp; Frontend Modal</td></tr>
-      <tr><td>Automated Grading &amp; Explanations</td><td>Ashiqur Rahman Shohag</td><td>2203034</td><td>Scoring Logic &amp; Answer Delivery</td></tr>
-      <tr><td>Verifiable Certificate Issuance</td><td>Ashiqur Rahman Shohag</td><td>2203034</td><td>Audit Check &amp; Print Layout</td></tr>
-      <tr><td>Public Credential Verification API</td><td>Ashiqur Rahman Shohag</td><td>2203034</td><td>Public Open Route</td></tr>
-      <tr><td>Academic Learning Analytics</td><td>Ashiqur Rahman Shohag</td><td>2203034</td><td>SQL Aggregates &amp; Dashboard</td></tr>
+      <tr><td>MCQ Assessment Engine</td><td>Ashiqur Rahman</td><td>2203034</td><td>Backend &amp; Frontend Modal</td></tr>
+      <tr><td>Automated Grading &amp; Explanations</td><td>Ashiqur Rahman</td><td>2203034</td><td>Scoring Logic &amp; Answer Delivery</td></tr>
+      <tr><td>Verifiable Certificate Issuance</td><td>Ashiqur Rahman</td><td>2203034</td><td>Audit Check &amp; Print Layout</td></tr>
+      <tr><td>Public Credential Verification API</td><td>Ashiqur Rahman</td><td>2203034</td><td>Public Open Route</td></tr>
+      <tr><td>Academic Learning Analytics</td><td>Ashiqur Rahman</td><td>2203034</td><td>SQL Aggregates &amp; Dashboard</td></tr>
       <tr><td>Course Discovery Catalog</td><td>Talha Jubair</td><td>2203035</td><td>Text Query Search &amp; Filter</td></tr>
       <tr><td>Application Shell &amp; Navigation</td><td>Talha Jubair</td><td>2203035</td><td>Responsive Frame &amp; Router</td></tr>
       <tr><td>Instructor Course Administration</td><td>Talha Jubair</td><td>2203035</td><td>Course CRUD &amp; Modals</td></tr>
@@ -1068,7 +1068,7 @@ The <strong>LearnHub</strong> platform successfully meets all prescribed require
 </p>
 <p>The team demonstrated effective collaborative division of labor:</p>
 <ul>
-  <li><strong>Ashiqur Rahman Shohag (2203034)</strong>: Assessment engine with anti-cheating sanitization, verifiable credentials, and learning analytics.</li>
+  <li><strong>Ashiqur Rahman (2203034)</strong>: Assessment engine with anti-cheating sanitization, verifiable credentials, and learning analytics.</li>
   <li><strong>Talha Jubair (2203035)</strong>: Responsive application shell, course catalog search, and sequential lesson reader.</li>
   <li><strong>Md. Rofaz Hasan Rafiu (2203036)</strong>: Peer reviews, community Q&amp;A forum with instructor badges, dual-theme engine, and automated integration test harness.</li>
 </ul>
