@@ -126,48 +126,6 @@
 % =========================================================================
 \pagenumbering{roman}
 
-\chapter*{Declaration of Authorship}
-\addcontentsline{toc}{chapter}{Declaration of Authorship}
-
-We hereby certify that this laboratory report titled \textbf{``LearnHub: A Scalable Full-Stack E-Learning Ecosystem with Interactive Assessment Engine, Verifiable Credentials, and Community Collaboration''} and the accompanying software codebase represent our original engineering work carried out as part of the \textbf{CSE 3206 (Software Engineering Sessional)} coursework at the Department of Computer Science \& Engineering, Rajshahi University of Engineering \& Technology (RUET).
-
-We confirm that:
-\begin{enumerate}[itemsep=4pt]
-    \item The code, architectural diagrams, schemas, and analytical models presented in this report were developed collaboratively by the undersigned team members.
-    \item External libraries, frameworks (React 18, Vite, Express.js, SQLite, Better-SQLite3), and standard algorithms utilized in this work have been explicitly identified and acknowledged.
-    \item The division of labor documented herein reflects the genuine technical contributions of each member without misrepresentation.
-    \item No portion of this report or the accompanying application has been submitted previously for any academic degree, certificate, or credit at RUET or any other academic institution.
-\end{enumerate}
-
-\vspace{1.8cm}
-\noindent
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ccc}
-    \rule{4.5cm}{0.4pt} & \rule{4.5cm}{0.4pt} & \rule{4.5cm}{0.4pt} \\
-    \textbf{Ashiqur Rahman} & \textbf{Talha Jubair} & \textbf{Md. Rofaz Hasan Rafiu} \\
-    Roll: 2203034 & Roll: 2203035 & Roll: 2203036 \\
-    Member 1 & Member 2 & Member 3 \\
-\end{tabular*}
-
-\newpage
-
-\chapter*{Acknowledgments}
-\addcontentsline{toc}{chapter}{Acknowledgments}
-
-We express our deepest gratitude and sincere appreciation to our esteemed course teacher and academic supervisor, \textbf{Emrana Kabir Hashi}, Assistant Professor, Department of Computer Science \& Engineering, Rajshahi University of Engineering \& Technology (RUET), for her invaluable guidance, rigorous academic standards, continuous encouragement, and constructive critique throughout the \textbf{CSE 3206: Software Engineering Sessional} course.
-
-Her insightful directives on software lifecycle models, clean architectural separation, database integrity constraints, and thorough empirical testing have significantly shaped the quality and technical rigor of the LearnHub platform.
-
-We also convey our appreciation to the Department of Computer Science \& Engineering, RUET, for providing the laboratory infrastructure and academic environment conducive to innovative software development. Finally, we thank our peers for their collaborative discussions and constructive feedback during testing and peer evaluation sessions.
-
-\vspace{1cm}
-\begin{flushright}
-    \textit{The Authors}\\
-    \textbf{Team Noob}\\
-    \textit{Department of CSE, RUET}
-\end{flushright}
-
-\newpage
-
 \chapter*{Executive Summary}
 \addcontentsline{toc}{chapter}{Executive Summary}
 
@@ -234,7 +192,7 @@ The concrete engineering objectives guiding LearnHub include:
 The project adopted the \textbf{Agile Scrum} lifecycle model with continuous integration and feature branching. The team executed three distinct iterations:
 \begin{itemize}[itemsep=3pt]
     \item \textbf{Sprint 1 (Architecture \& Foundations)}: Establishing SQLite schema, database initialization, JWT authentication pipelines, and foundational UI layouts.
-    \item \textbf{Sprint 2 (Core Subsystem Development)}: Independent modular development across assessment pipelines (Shohag), catalog and enrollment flows (Talha), and reviews/discussions/theme engine (Rofaz).
+    \item \textbf{Sprint 2 (Core Subsystem Development)}: Independent modular development across assessment pipelines (Ashiqur Rahman), catalog and enrollment flows (Talha), and reviews/discussions/theme engine (Rofaz).
     \item \textbf{Sprint 3 (Integration, Hardening, and Documentation)}: Cross-subsystem integration, anti-cheating audit, automated test suite verification, and comprehensive LaTeX report compilation.
 \end{itemize}
 
@@ -573,7 +531,7 @@ const attemptQuiz = (quizId, studentId, studentAnswers) => {
 \end{lstlisting}
 
 \subsection{Cryptographically Verifiable Certification Subsystem}
-Shohag designed the certificate synthesizer. When a student satisfies curriculum criteria ($completed\_lessons == total\_lessons$), the server generates a deterministic alphanumeric validation token:
+Ashiqur Rahman designed the certificate synthesizer. When a student satisfies curriculum criteria ($completed\_lessons == total\_lessons$), the server generates a deterministic alphanumeric validation token:
 \begin{equation}
     K_{cert} = \text{``LH''} \mathbin{\Vert} \text{CourseId} \mathbin{\Vert} \text{StudentId} \mathbin{\Vert} \text{CryptoHex}(3)
 \end{equation}
@@ -594,8 +552,8 @@ router.get('/verify/:code', asyncHandler(async (req, res) => {
 }));
 \end{lstlisting}
 
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Subsystem Staging Protocol for Member 1 (Shohag Roll 2203034)}]
-\textbf{Context}: Due to an unexpected medical emergency during final sprint packaging, Member 1's modular files (\texttt{quizzes}, \texttt{certificates}, \texttt{analytics}) were structured into \texttt{READMESHOHAG.md} and accompanied by an automated restoration script (\texttt{scripts/restore\_shohag.js}). This ensures Shohag's code remains 100\% complete and enables him to commit his deliverables from his personal git author credentials independently without merge friction.
+\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Subsystem Staging Protocol for Member 1 (Ashiqur Rahman Roll 2203034)}]
+\textbf{Context}: Due to an unexpected medical emergency during final sprint packaging, Member 1's modular files (\texttt{quizzes}, \texttt{certificates}, \texttt{analytics}) were structured into \texttt{READMESHOHAG.md} and accompanied by an automated restoration script (\texttt{scripts/restore\_shohag.js}). This ensures Ashiqur Rahman's code remains 100\% complete and enables him to commit his deliverables from his personal git author credentials independently without merge friction.
 \end{tcolorbox}
 
 \section{Member 2 — Talha Jubair (Roll: 2203035)}
@@ -780,7 +738,7 @@ Figure~\ref{fig:cert} presents the generated Certificate of Achievement. Featuri
 \end{figure}
 
 \section{Academic Learning Analytics Dashboard}
-Figure~\ref{fig:analytics} demonstrates the Student Learning Analytics dashboard. Designed by Shohag, the interface features statistical KPI metric cards (\textit{Enrolled Courses}, \textit{Completed Lessons}, \textit{Passed Quizzes}, \textit{Average Score}, and \textit{Certificates Earned}) and a chronological log of all evaluation attempts.
+Figure~\ref{fig:analytics} demonstrates the Student Learning Analytics dashboard. Designed by Ashiqur Rahman, the interface features statistical KPI metric cards (\textit{Enrolled Courses}, \textit{Completed Lessons}, \textit{Passed Quizzes}, \textit{Average Score}, and \textit{Certificates Earned}) and a chronological log of all evaluation attempts.
 
 \begin{figure}[H]
     \centering
@@ -970,7 +928,7 @@ The following ten questions address comprehensive academic inquiries during univ
 \textbf{Answer}: SQLite is serverless, zero-configuration, and ACID-compliant. In an educational sessional environment, SQLite guarantees that database state, seed records, and relational constraints execute deterministically on any evaluator's workstation without requiring external service configuration. Furthermore, our data model is inherently relational (courses, lessons, enrollments, attempts) where foreign key cascade constraints are essential.
 \end{tcolorbox}
 
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q2: How does Member 1 (Shohag) prevent students from cheating on quizzes?}]
+\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q2: How does Member 1 (Ashiqur Rahman) prevent students from cheating on quizzes?}]
 \textbf{Answer}: When students fetch quiz questions, the backend explicitly sanitizes out \texttt{correct\_index} and \texttt{explanation} from the JSON payload. Answer keys are stored solely in the database. The client only receives the correct keys and pedagogical explanations \textit{after} the server calculates and records the student's submission.
 \end{tcolorbox}
 

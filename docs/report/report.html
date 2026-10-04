@@ -378,48 +378,19 @@
   </div>
 </div>
 
-<!-- ================= PAGE 2: DECLARATION & PREFATORY ================= -->
+<!-- ================= PAGE 2: EXECUTIVE SUMMARY & CHAPTER 1 ================= -->
 <div class="page-break"></div>
 
-<h1 class="chapter-title">Declaration of Authorship</h1>
-<p>
-We hereby certify that this laboratory report titled <strong>"LearnHub: A Scalable Full-Stack E-Learning Ecosystem with Interactive Assessment Engine, Verifiable Credentials, and Community Collaboration"</strong> and the accompanying codebase represent our original engineering work carried out as part of the <strong>CSE 3206 (Software Engineering Sessional)</strong> coursework at the Department of Computer Science &amp; Engineering, Rajshahi University of Engineering &amp; Technology (RUET).
-</p>
-<p>We specifically affirm that:</p>
-<ul>
-  <li>The source code, relational schemas, architectural models, and empirical verification harnesses were engineered collaboratively by the undersigned team members.</li>
-  <li>All third-party libraries (React 18, Express.js, Vite, Better-SQLite3, Puppeteer) have been utilized strictly within academic fair-use guidelines with proper attribution.</li>
-  <li>The division of labor documented herein reflects the authentic technical deliverables accomplished by each member without misrepresentation.</li>
-  <li>No portion of this work has been submitted previously for any academic degree, certificate, or credit at RUET or any other institution.</li>
-</ul>
-
-<div class="signature-grid">
-  <div class="signature-box">
-    <strong>Ashiqur Rahman</strong><br>Roll: 2203034 | Member 1
-  </div>
-  <div class="signature-box">
-    <strong>Talha Jubair</strong><br>Roll: 2203035 | Member 2
-  </div>
-  <div class="signature-box">
-    <strong>Md. Rofaz Hasan Rafiu</strong><br>Roll: 2203036 | Member 3
-  </div>
+<div class="callout callout-blue" style="margin-bottom: 12px; border-left-width: 4px;">
+  <div class="callout-title" style="font-size: 10.5pt; margin-bottom: 5px;">Executive Summary</div>
+  <p style="margin-bottom: 5px; font-size: 8.5pt; line-height: 1.42;">
+  This engineering report details the architecture, implementation, and empirical verification of <strong>LearnHub</strong>, an enterprise-grade web-based learning management system. Developed to resolve interface bloat, opaque grading, and credential tampering associated with legacy e-learning tools, LearnHub provides a responsive Single Page Application (SPA) linked to an ACID-compliant transactional persistence engine.
+  </p>
+  <p style="margin: 0; font-size: 8.5pt; line-height: 1.42;">
+  The system is architected across three decoupled tiers: (1) <strong>Presentation Layer</strong> built with React 18, Vite, context providers (AuthContext, ThemeContext, ToastContext), and dual-theme styling; (2) <strong>Application Layer</strong> powered by Node.js and Express.js, featuring stateless JWT authorization, bcrypt password hashing (10 salt rounds), and client anti-cheating response sanitization; and (3) <strong>Persistence Layer</strong> operating an ACID-compliant SQLite store via <code>better-sqlite3</code> configured in Write-Ahead Logging (WAL) mode across 11 normalized tables. Empirical verification confirms a <strong>100% pass rate</strong> across 10 integration test suites with sub-50ms average response times.
+  </p>
 </div>
 
-<h1 class="chapter-title" style="margin-top: 14px;">Acknowledgments</h1>
-<p>
-We express our deepest gratitude and sincere appreciation to our course supervisor, <strong>Emrana Kabir Hashi</strong>, Assistant Professor, Department of Computer Science &amp; Engineering, RUET, for her invaluable academic guidance, pedagogical rigor, and constructive critiques throughout <strong>CSE 3206: Software Engineering Sessional</strong>. Her directives on modular architectural decoupling, database integrity constraints, anti-cheating security considerations, and rigorous test-driven validation have substantially elevated the software engineering standards of the LearnHub platform.
-</p>
-
-<h1 class="chapter-title" style="margin-top: 14px;">Executive Summary</h1>
-<p>
-This engineering report details the architecture, implementation, and empirical verification of <strong>LearnHub</strong>, an enterprise-grade web-based learning management system. Developed to resolve interface bloat, opaque grading, and credential tampering associated with legacy e-learning tools, LearnHub provides a responsive Single Page Application (SPA) linked to an ACID-compliant transactional persistence engine.
-</p>
-<p>
-The system is architected across three decoupled tiers: (1) <strong>Presentation Layer</strong> built with React 18, Vite, context providers (AuthContext, ThemeContext, ToastContext), and dual-theme styling; (2) <strong>Application Layer</strong> powered by Node.js and Express.js, featuring stateless JWT authorization, bcrypt password hashing (10 salt rounds), and client anti-cheating response sanitization; and (3) <strong>Persistence Layer</strong> operating an ACID-compliant SQLite store via <code>better-sqlite3</code> configured in Write-Ahead Logging (WAL) mode across 11 normalized tables. Empirical verification confirms a <strong>100% pass rate</strong> across 10 integration test suites with sub-50ms average response times.
-</p>
-
-<!-- ================= PAGE 3: INTRO & OBJECTIVES ================= -->
-<div class="page-break"></div>
 <h1 class="chapter-title">
   <span>Introduction and Project Objectives</span>
   <span class="ch-num">Chapter 1</span>
@@ -455,7 +426,7 @@ The objective of this engineering sessional was to architect, develop, and empir
 
 <h2 class="section-title">1.4 Agile Scrum Lifecycle</h2>
 <p>
-Development proceeded over three sprint cycles utilizing feature branching and Git version control. Sprint 1 finalized relational schemas, JWT authentication, and baseline layouts. Sprint 2 delivered core subsystems: assessments and certificates (Shohag), catalog and reader (Talha), reviews, discussions, and dual-theme engine (Rafiu). Sprint 3 executed end-to-end integration, automated test harness execution, and documentation compilation.
+Development proceeded over three sprint cycles utilizing feature branching and Git version control. Sprint 1 finalized relational schemas, JWT authentication, and baseline layouts. Sprint 2 delivered core subsystems: assessments and certificates (Ashiqur Rahman), catalog and reader (Talha Jubair), reviews, discussions, and dual-theme engine (Md. Rofaz Hasan Rafiu). Sprint 3 executed end-to-end integration, automated test harness execution, and documentation compilation.
 </p>
 
 <!-- ================= PAGE 4: SRS ================= -->
@@ -719,7 +690,7 @@ SQLite is initialized with Write-Ahead Logging (<code>PRAGMA journal_mode = WAL;
 <h2 class="section-title">5.1 Member 1 — Ashiqur Rahman (Roll: 2203034)</h2>
 <p><strong>Assigned Modules: Assessment Engine, Verifiable Certification, and Learning Analytics</strong></p>
 <p>
-Shohag architected the objective assessment and cryptographic credential subsystems. Figure 5.1 depicts the evaluation and certification pipeline flowchart.
+Ashiqur Rahman architected the objective assessment and cryptographic credential subsystems. Figure 5.1 depicts the evaluation and certification pipeline flowchart.
 </p>
 
 <!-- SVG Diagram 4: Assessment & Cert Pipeline -->
@@ -756,9 +727,9 @@ Shohag architected the objective assessment and cryptographic credential subsyst
 <div class="table-caption">Figure 5.1: Assessment Evaluation and Certificate Issuance State Flowchart</div>
 
 <div class="callout callout-gold">
-  <div class="callout-title">Subsystem Staging Protocol for Member 1 (Shohag Roll 2203034)</div>
+  <div class="callout-title">Subsystem Staging Protocol for Member 1 (Ashiqur Rahman Roll 2203034)</div>
   <p style="margin:0; font-size:8.4pt;">
-  Due to an unexpected medical emergency during final release packaging, Member 1's code files were preserved in <code>READMESHOHAG.md</code> alongside an automated extraction script <code>scripts/restore_shohag.js</code>. This ensures Shohag's code remains completely intact and enables him to commit his deliverables from his personal git author credentials independently without merge conflicts.
+  Due to an unexpected medical emergency during final release packaging, Member 1's code files were preserved in <code>READMESHOHAG.md</code> alongside an automated extraction script <code>scripts/restore_shohag.js</code>. This ensures Ashiqur Rahman's code remains completely intact and enables him to commit his deliverables from his personal git author credentials independently without merge conflicts.
   </p>
 </div>
 
@@ -1072,7 +1043,7 @@ The <strong>LearnHub</strong> platform successfully meets all prescribed require
   <p style="margin:0; font-size:8.5pt;">
   <strong>Repository</strong>: <code>https://github.com/TalhaJubair35/SWE-lab-2-noob-project.git</code><br>
   <strong>Branch</strong>: <code>main</code> | <strong>Working Tree</strong>: Clean | <strong>Automated Tests</strong>: 10/10 Passed (100%)<br>
-  <strong>Deliverables</strong>: Full-Stack Codebase, SQLite Database, 1-Click Restore Script for Shohag, and this Official Academic Report.
+  <strong>Deliverables</strong>: Full-Stack Codebase, SQLite Database, 1-Click Restore Script for Ashiqur Rahman, and this Official Academic Report.
   </p>
 </div>
 
