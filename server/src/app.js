@@ -3,6 +3,8 @@ import cors from 'cors';
 import authRouter from './modules/auth/auth.routes.js';
 import coursesRouter from './modules/courses/courses.routes.js';
 import learningRouter from './modules/learning/learning.routes.js';
+import reviewsRouter from './modules/reviews/reviews.routes.js';
+import discussionsRouter from './modules/discussions/discussions.routes.js';
 import errorHandler from './common/middleware/errorHandler.js';
 import AppError from './common/AppError.js';
 
@@ -18,6 +20,8 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/courses', coursesRouter);
 app.use('/api', learningRouter);
+app.use('/api', reviewsRouter);
+app.use('/api', discussionsRouter);
 
 app.use((req, res, next) => {
   next(new AppError(404, 'Route not found'));

@@ -3,6 +3,10 @@ node_modules/
 .env.*
 !.env.example
 server/data/
+data/
+*.db
+*.db-journal
 server/.env
 client/dist/
 .DS_Store
+

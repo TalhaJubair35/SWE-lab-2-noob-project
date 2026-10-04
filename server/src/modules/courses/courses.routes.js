@@ -72,6 +72,8 @@ router.get(
         u.name AS instructor_name,
         COUNT(DISTINCT l.id) AS lesson_count,
         COUNT(DISTINCT e.student_id) AS enrollment_count,
+        ROUND(COALESCE(AVG(r.rating), 0), 1) AS avg_rating,
+        COUNT(DISTINCT r.id) AS review_count,
         EXISTS (
           SELECT 1 FROM enrollments mine
           WHERE mine.course_id = c.id AND mine.student_id = ?
@@ -80,6 +82,7 @@ router.get(
       JOIN users u ON u.id = c.instructor_id
       LEFT JOIN lessons l ON l.course_id = c.id
       LEFT JOIN enrollments e ON e.course_id = c.id
+      LEFT JOIN reviews r ON r.course_id = c.id
       ${where}
       GROUP BY c.id
       ORDER BY c.created_at DESC, c.id DESC
@@ -96,10 +99,13 @@ router.get(
     const courses = db.prepare(`
       SELECT c.id, c.title, c.description, c.category, c.created_at,
         COUNT(DISTINCT l.id) AS lesson_count,
-        COUNT(DISTINCT e.student_id) AS enrollment_count
+        COUNT(DISTINCT e.student_id) AS enrollment_count,
+        ROUND(COALESCE(AVG(r.rating), 0), 1) AS avg_rating,
+        COUNT(DISTINCT r.id) AS review_count
       FROM courses c
       LEFT JOIN lessons l ON l.course_id = c.id
       LEFT JOIN enrollments e ON e.course_id = c.id
+      LEFT JOIN reviews r ON r.course_id = c.id
       WHERE c.instructor_id = ?
       GROUP BY c.id
       ORDER BY c.created_at DESC, c.id DESC
@@ -132,6 +138,8 @@ router.get(
         u.name AS instructor_name,
         COUNT(DISTINCT l.id) AS lesson_count,
         COUNT(DISTINCT e.student_id) AS enrollment_count,
+        ROUND(COALESCE(AVG(r.rating), 0), 1) AS avg_rating,
+        COUNT(DISTINCT r.id) AS review_count,
         EXISTS (
           SELECT 1 FROM enrollments mine
           WHERE mine.course_id = c.id AND mine.student_id = ?
@@ -140,6 +148,7 @@ router.get(
       JOIN users u ON u.id = c.instructor_id
       LEFT JOIN lessons l ON l.course_id = c.id
       LEFT JOIN enrollments e ON e.course_id = c.id
+      LEFT JOIN reviews r ON r.course_id = c.id
       WHERE c.id = ?
       GROUP BY c.id
     `).get(req.user.id, id);
