@@ -881,69 +881,46 @@ Table~\ref{tab:benchmarks} summarizes average response latencies measured across
 % =========================================================================
 % CHAPTER 9: EVALUATOR'S DEMO WALKTHROUGH AND VIVA VOCE DEFENSE
 % =========================================================================
-\chapter{Evaluator's Demo Walkthrough and Viva Voce Defense}
+\chapter{System Security Architecture and Operational Governance}
 
-\section{Step-by-Step Evaluator Demo Walkthrough}
-Evaluators can replicate all platform capabilities using the pre-seeded demo environment:
-\begin{enumerate}[itemsep=4pt]
-    \item \textbf{Start System Services}:
-    Ensure backend is running on \texttt{http://localhost:4000} and client on \texttt{http://localhost:5173}.
-    \item \textbf{Instant 1-Click Login}:
-    Navigate to \texttt{http://localhost:5173/login}. Click the \textbf{Student Demo} button. Observe instant population of credentials and automated authentication redirecting to the course catalog.
-    \item \textbf{Explore Catalog \& Live Filtering}:
-    Type \texttt{"JavaScript"} in the search bar. Observe instant debounced filtering. Note the average star rating and review count badge on course cards.
-    \item \textbf{Engage Course Learning Hub}:
-    Click \textbf{Start Learning} on \textit{Intro to JavaScript}. Observe the 3-panel tabbed layout (\textit{Lessons}, \textit{Discussion Forum}, \textit{Reviews \& Feedback}).
-    \item \textbf{Verify Forum \& Review Subsystems}:
-    Switch to \textbf{Discussion Forum (Q\&A)}. Notice student questions and instructor responses highlighted with \textbf{INSTRUCTOR} badges. Switch to \textbf{Reviews \& Feedback} and inspect the 5-star rating distribution histogram.
-    \item \textbf{Test Dark/Light Theme Switching}:
-    Click the theme icon (☀️/🌙) in the upper navigation bar. Observe instant, smooth transition between dark slate and clean light color schemes across all components.
-    \item \textbf{Audit Public Certificate Verification}:
-    Visit \texttt{http://localhost:4000/api/certificates/verify/LH-1-2-7050B8} in an unauthenticated or incognito browser window. Observe that valid graduate metadata is returned immediately.
+\section{Multi-Layer Defense-in-Depth Security Model}
+LearnHub enforces enterprise-grade security controls across presentation, application, and persistence tiers to safeguard user identity, academic integrity, and credential validity:
+
+\begin{itemize}[itemsep=5pt]
+    \item \textbf{Cryptographic Session Authentication (JWT)}: User sessions are governed by cryptographically signed JSON Web Tokens utilizing HMAC-SHA256 (\texttt{HS256}) with 24-hour expiration limits. Tokens encapsulate identity claims (\texttt{userId}, \texttt{role}) and are transmitted via HTTP \texttt{Authorization: Bearer <token>} headers, eliminating Cross-Site Request Forgery (CSRF) vulnerabilities.
+    \item \textbf{Adaptive Credential Hashing (Bcrypt)}: User passwords undergo 10 rounds of salt generation and key stretching via \texttt{bcrypt} ($2^{10} = 1024$ computational iterations), rendering precomputed rainbow table and brute-force dictionary attacks computationally infeasible.
+    \item \textbf{Parameterized Prepared Statements (SQLi Immunity)}: All database interactions utilize compiled prepared statements through \texttt{better-sqlite3} (e.g., \texttt{db.prepare('SELECT * FROM users WHERE email = ?').get(email)}). Input values are bound separately from SQL execution trees, completely neutralizing SQL Injection attacks.
+    \item \textbf{Anti-Cheating Assessment Sanitization Pipeline}: When students fetch quiz questionnaires, the backend explicitly filters out \texttt{correct\_index} and \texttt{explanation} fields before JSON serialization. Answer evaluation executes exclusively on the server in $\mathcal{O}(N)$ memory time.
+\end{itemize}
+
+\section{OWASP Top 10 Security Compliance and Threat Mitigation}
+Table~\ref{tab:owasp} maps primary OWASP web application security risks to LearnHub architectural countermeasures:
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{3.5cm}Xp{5.5cm}}
+\toprule
+\textbf{OWASP Category} & \textbf{Potential Attack Vector} & \textbf{LearnHub Architectural Defense} \\ \midrule
+\textbf{A01: Broken Access Control} & Students attempting instructor course updates or viewing unissued diploma keys. & Role-Based Access Control (RBAC) middleware validating \texttt{req.user.role === 'instructor'} and atomic completion audits. \\
+\textbf{A02: Cryptographic Failures} & Interception of plaintext credentials or forging graduate certification codes. & 10 salt rounds of bcrypt password hashing; deterministic high-entropy alphanumeric tokens (\texttt{LH-<c>-<s>-<HEX>}). \\
+\textbf{A03: Injection (SQL / XSS)} & Malicious SQL payloads in login or script tags in discussion threads. & 100\% prepared SQL statements with parameter binding; React DOM virtual text node escaping eliminating XSS vulnerabilities. \\
+\textbf{A04: Insecure Design} & Exam payload tampering via browser developer tools or network inspection. & Zero client-side grading authority; answer keys remain securely sealed within SQLite persistence layer until post-submission. \\ \bottomrule
+\end{tabularx}
+\caption{System Threat Modeling and OWASP Security Mitigation Matrix}
+\label{tab:owasp}
+\end{table}
+
+\section{Concurrency Architecture and Evaluator Verification Runbook}
+The persistence layer is configured in \textbf{Write-Ahead Logging (WAL)} mode (\texttt{PRAGMA journal\_mode = WAL;}), enabling concurrent, lock-free read transactions while writes append sequentially to the \texttt{-wal} journal. Relational integrity is guaranteed via foreign key cascades (\texttt{PRAGMA foreign\_keys = ON;}).
+
+Evaluators can verify the running application through the following operational steps:
+\begin{enumerate}[itemsep=3pt]
+    \item \textbf{Start System Services}: Ensure backend is active on \texttt{http://localhost:4000} and client on \texttt{http://localhost:5173}.
+    \item \textbf{Instant 1-Click Login}: Navigate to \texttt{http://localhost:5173/login}. Click the \textbf{Student Demo} button to authenticate instantly with pre-seeded data.
+    \item \textbf{Explore Learning Hub}: Open \textit{Intro to JavaScript}. Inspect sequential lessons, the interactive community Q\&A forum with verified instructor badges, and peer star ratings.
+    \item \textbf{Public Certificate Audit}: Open an incognito browser window and query \texttt{http://localhost:4000/api/certificates/verify/LH-1-2-7050B8} to verify credential validity without authentication.
 \end{enumerate}
-
-\section{Academic Viva Voce Defense Questions \& Answers}
-The following ten questions address comprehensive academic inquiries during university sessional defense:
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q1: Why was SQLite selected over client-server engines like MongoDB or PostgreSQL?}]
-\textbf{Answer}: SQLite is serverless, zero-configuration, and ACID-compliant. In an educational sessional environment, SQLite guarantees that database state, seed records, and relational constraints execute deterministically on any evaluator's workstation without requiring external service configuration. Furthermore, our data model is inherently relational (courses, lessons, enrollments, attempts) where foreign key cascade constraints are essential.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q2: How does Member 1 (Ashiqur Rahman) prevent students from cheating on quizzes?}]
-\textbf{Answer}: When students fetch quiz questions, the backend explicitly sanitizes out \texttt{correct\_index} and \texttt{explanation} from the JSON payload. Answer keys are stored solely in the database. The client only receives the correct keys and pedagogical explanations \textit{after} the server calculates and records the student's submission.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q3: How does the certificate verification system work without a central blockchain?}]
-\textbf{Answer}: When a student finishes 100\% of a course's lessons, the system generates a cryptographically unique key combining course ID, student ID, and secure random hex bytes (\texttt{LH-<courseId>-<studentId>-<HEX>}). This key is indexed with a \texttt{UNIQUE} constraint in SQLite. The public verification endpoint allows anyone with the code to verify graduate name, course title, and issue date in $\mathcal{O}(1)$ time.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q4: How does the system handle concurrent review submissions?}]
-\textbf{Answer}: The \texttt{reviews} table enforces a database-level constraint \texttt{UNIQUE(student\_id, course\_id)}. If a student submits a subsequent rating, the query executes an \texttt{UPDATE} rather than an \texttt{INSERT}, preventing duplicate review inflation and ensuring statistical integrity in the 5-star histogram.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q5: What is Write-Ahead Logging (WAL) and why is it beneficial here?}]
-\textbf{Answer}: In standard rollback journal mode, writing locks the entire database. In WAL mode, changes are written sequentially to a separate \texttt{-wal} log file. Readers access the original database file while writers append to the log. This enables concurrent reading and writing without database locks.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q6: How does the backend prevent SQL Injection attacks?}]
-\textbf{Answer}: Every database interaction is executed using parameterized prepared statements via \texttt{better-sqlite3} (e.g., \texttt{db.prepare('SELECT * FROM users WHERE email = ?').get(email)}). Input values are transmitted separately from the SQL command structure, ensuring user inputs are treated strictly as data literals and cannot alter the SQL parse tree.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q7: What makes bcrypt preferable to SHA-256 for password storage?}]
-\textbf{Answer}: SHA-256 is designed for high-throughput data hashing and can be brute-forced at billions of hashes per second using GPUs. In contrast, bcrypt is an adaptive key derivation function with an adjustable work factor (salt rounds). LearnHub uses 10 salt rounds ($2^{10} = 1024$ iterations), requiring substantial computation per attempt and rendering brute-force dictionary attacks computationally infeasible.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q8: How does React Router 6 protect routes on the client side?}]
-\textbf{Answer}: Client-side route protection is achieved via a reusable \texttt{ProtectedRoute.jsx} component wrapping sensitive routes. It inspects \texttt{AuthContext}; if no valid token exists, it renders a \texttt{<Navigate to="/login" replace />} component. If a role is required (e.g., \texttt{instructor}) that the user lacks, it redirects to the unauthorized view.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q9: Why was Git chosen for version control, and how was collaboration structured?}]
-\textbf{Answer}: Git provides distributed, cryptographically hashed commit tracking. Team members maintained modular branch separation corresponding to their assigned subsystems. Figure~\ref{fig:gitcommits} confirms distinct commit authorship, clean working tree states, and structured branch integration.
-\end{tcolorbox}
-
-\begin{tcolorbox}[colback=ruetblue!5!white,colframe=ruetblue,title=\textbf{Viva Q10: How are themes managed without CSS framework dependencies like Tailwind?}]
-\textbf{Answer}: LearnHub uses pure Vanilla CSS Custom Properties (CSS variables) declared on the root \texttt{:root} and \texttt{[data-theme="dark"]} selectors. Switching the attribute dynamically updates all calculated color tokens across the DOM in a single paint cycle without stylesheet recompilation.
-\end{tcolorbox}
 
 ---
 

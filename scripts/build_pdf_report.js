@@ -998,59 +998,70 @@ To ensure system stability, an automated integration test harness (<code>server/
   <div class="table-caption">Table 8.2: Measured System Latency and Throughput Benchmarks</div>
 </div>
 
-<!-- ================= PAGE 13: VIVA VOCE DEFENSE ================= -->
+<!-- ================= PAGE 12: SECURITY & OPERATIONAL GOVERNANCE ================= -->
 <div class="page-break"></div>
 <h1 class="chapter-title">
-  <span>Evaluator's Demo Walkthrough and Viva Voce Defense</span>
+  <span>System Security Architecture and Operational Governance</span>
   <span class="ch-num">Chapter 9</span>
 </h1>
 
-<h2 class="section-title">9.1 Evaluator Demo Walkthrough</h2>
+<h2 class="section-title">9.1 Multi-Layer Defense-in-Depth Security Model</h2>
+<p>
+LearnHub enforces enterprise-grade security controls across presentation, application, and persistence tiers to safeguard user identity, academic integrity, and credential validity:
+</p>
+<ul>
+  <li><strong>Cryptographic Session Authentication (JWT)</strong>: Sessions are governed by cryptographically signed JSON Web Tokens utilizing HMAC-SHA256 (<code>HS256</code>) with 24-hour expiration limits. Tokens encapsulate identity claims (<code>userId</code>, <code>role</code>) and are transmitted via HTTP <code>Authorization: Bearer &lt;token&gt;</code> headers, eliminating Cross-Site Request Forgery (CSRF) vulnerabilities.</li>
+  <li><strong>Adaptive Credential Hashing (Bcrypt)</strong>: User passwords undergo 10 rounds of salt generation and key stretching via <code>bcrypt</code> ($2^{10} = 1024$ computational iterations), rendering precomputed rainbow table and dictionary attacks computationally infeasible.</li>
+  <li><strong>Parameterized Prepared Statements (SQLi Immunity)</strong>: All database interactions utilize compiled prepared statements through <code>better-sqlite3</code> (e.g., <code>db.prepare('SELECT * FROM users WHERE email = ?').get(email)</code>). Input values are bound separately from SQL execution trees, completely neutralizing SQL Injection attacks.</li>
+  <li><strong>Anti-Cheating Assessment Sanitization Pipeline</strong>: When students fetch quiz questionnaires, the backend explicitly filters out <code>correct_index</code> and <code>explanation</code> fields before JSON serialization. Answer evaluation executes exclusively on the server in $\mathcal{O}(N)$ memory time.</li>
+</ul>
+
+<h2 class="section-title">9.2 OWASP Top 10 Security Compliance Matrix</h2>
+<div class="avoid-break">
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">OWASP Threat Category</th>
+        <th style="width: 35%;">Potential Attack Vector</th>
+        <th style="width: 40%;">LearnHub Mitigation Architecture</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A01: Broken Access Control</strong></td>
+        <td>Students attempting instructor course updates or viewing unissued diploma keys.</td>
+        <td>Role-Based Access Control (RBAC) middleware validating <code>req.user.role === 'instructor'</code> and atomic completion audits.</td>
+      </tr>
+      <tr>
+        <td><strong>A02: Cryptographic Failures</strong></td>
+        <td>Interception of plaintext credentials or forging graduate certification codes.</td>
+        <td>10 salt rounds of bcrypt password hashing; deterministic high-entropy alphanumeric tokens (<code>LH-&lt;c&gt;-&lt;s&gt;-&lt;HEX&gt;</code>).</td>
+      </tr>
+      <tr>
+        <td><strong>A03: Injection (SQL / XSS)</strong></td>
+        <td>Malicious SQL payloads in login or script tags in discussion threads.</td>
+        <td>100% prepared SQL statements with parameter binding; React DOM virtual text node escaping eliminating XSS vulnerabilities.</td>
+      </tr>
+      <tr>
+        <td><strong>A04: Insecure Design</strong></td>
+        <td>Exam payload tampering via browser developer tools or network inspection.</td>
+        <td>Zero client-side grading authority; answer keys remain securely sealed within SQLite persistence layer until post-submission.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="table-caption">Table 9.1: System Threat Modeling and OWASP Security Mitigation Matrix</div>
+</div>
+
+<h2 class="section-title">9.3 Concurrency Architecture &amp; Evaluator Verification Runbook</h2>
+<p>
+The persistence layer is configured in <strong>Write-Ahead Logging (WAL)</strong> mode (<code>PRAGMA journal_mode = WAL;</code>), enabling concurrent, lock-free read transactions while writes append sequentially to the <code>-wal</code> journal. Relational integrity is guaranteed via foreign key cascades (<code>PRAGMA foreign_keys = ON;</code>).
+</p>
 <ol>
-  <li><strong>Launch Platform</strong>: Access client on <code>http://localhost:5173</code> and API on <code>http://localhost:4000</code>.</li>
-  <li><strong>1-Click Evaluator Login</strong>: Click <strong>Student Demo</strong> on login portal for instant pre-seeded access.</li>
-  <li><strong>Search &amp; Catalog</strong>: Type <code>"JavaScript"</code> into search bar. Observe real-time debounced filtering.</li>
-  <li><strong>Engage Learning Hub</strong>: Click <strong>Start Learning</strong> on <em>Intro to JavaScript</em>. Inspect the 3-tab layout (Lessons, Discussion, Reviews).</li>
-  <li><strong>Review Forum &amp; Ratings</strong>: Switch to <strong>Discussion Forum</strong> to observe instructor badges. Switch to <strong>Reviews</strong> to view 5-star histogram.</li>
-  <li><strong>Toggle Theme</strong>: Click sun/moon icon (☀️/🌙) in navbar to test seamless Dark/Light CSS transitions.</li>
-  <li><strong>Public Certificate Audit</strong>: Open incognito window and visit <code>http://localhost:4000/api/certificates/verify/LH-1-2-7050B8</code> to confirm public verification without login.</li>
+  <li><strong>Start Services</strong>: Launch backend on port <code>4000</code> (<code>npm start</code>) and client on port <code>5173</code> (<code>npm run dev</code>).</li>
+  <li><strong>1-Click Evaluator Login</strong>: Use the login portal's <strong>Student Demo</strong> pill for instantaneous authenticated access.</li>
+  <li><strong>Interactive Workflows</strong>: Enroll in courses, complete lessons sequentially, attempt MCQ assessments, submit 1–5 star reviews, post in Q&amp;A forums, and verify theme toggling.</li>
+  <li><strong>Public Certificate Audit</strong>: Access <code>http://localhost:4000/api/certificates/verify/LH-1-2-7050B8</code> without authentication to verify credential legitimacy.</li>
 </ol>
-
-<h2 class="section-title">9.2 Academic Viva Voce Defense Q&amp;A</h2>
-<div class="callout callout-blue">
-  <div class="callout-title">Q1: Why SQLite instead of PostgreSQL or MongoDB?</div>
-  <p style="margin:0; font-size:8.3pt;">
-  <strong>Answer</strong>: SQLite is serverless, zero-configuration, and ACID-compliant. In an educational evaluation setting, SQLite guarantees that database state, seed records, and relational constraints execute deterministically on any machine without background service overhead. Our data model is inherently relational where foreign key cascade constraints are essential.
-  </p>
-</div>
-
-<div class="callout callout-blue">
-  <div class="callout-title">Q2: How is client cheating prevented on assessments?</div>
-  <p style="margin:0; font-size:8.3pt;">
-  <strong>Answer</strong>: When students fetch quiz questions, the backend explicitly sanitizes out <code>correct_index</code> and <code>explanation</code> from the JSON payload. Answer keys are stored solely in the database. Explanations and keys are released strictly after the server grades and records the student's submission.
-  </p>
-</div>
-
-<div class="callout callout-blue">
-  <div class="callout-title">Q3: How does certificate verification operate without a central blockchain?</div>
-  <p style="margin:0; font-size:8.3pt;">
-  <strong>Answer</strong>: Upon 100% curriculum completion, the server generates a unique alphanumeric token combining course ID, student ID, and secure random hex bytes (<code>LH-&lt;courseId&gt;-&lt;studentId&gt;-&lt;HEX&gt;</code>) stored under an indexed <code>UNIQUE</code> constraint. The open verification endpoint resolves graduate name, course title, and issue date in &Omicron;(1) time.
-  </p>
-</div>
-
-<div class="callout callout-blue">
-  <div class="callout-title">Q4: What is Write-Ahead Logging (WAL) mode?</div>
-  <p style="margin:0; font-size:8.3pt;">
-  <strong>Answer</strong>: Standard rollback journal mode locks the database during writes. In WAL mode, changes are appended to a separate log file, allowing readers to access data concurrently without locking, significantly improving multi-user response times.
-  </p>
-</div>
-
-<div class="callout callout-blue">
-  <div class="callout-title">Q5: How does the backend prevent SQL Injection attacks?</div>
-  <p style="margin:0; font-size:8.3pt;">
-  <strong>Answer</strong>: Every database interaction uses parameterized prepared statements via <code>better-sqlite3</code> (e.g., <code>db.prepare('SELECT * FROM users WHERE email = ?').get(email)</code>). Input values are transmitted separately from the SQL command structure, treating user input strictly as data literals.
-  </p>
-</div>
 
 <!-- ================= PAGE 14: CONCLUSION ================= -->
 <div class="page-break"></div>
