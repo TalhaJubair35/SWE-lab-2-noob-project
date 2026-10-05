@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "node test_all_features.js",
+    "test:gtest": "cd ../gtest && ./run_tests.sh"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

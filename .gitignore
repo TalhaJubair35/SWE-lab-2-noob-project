@@ -9,4 +9,6 @@ data/
 server/.env
 client/dist/
 .DS_Store
+gtest/googletest/
+gtest/bin/
 
