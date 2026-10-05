@@ -748,7 +748,7 @@ Talha Jubair implemented the foundational application shell, course catalog with
 Md. Rofaz Hasan Rafiu engineered the peer review module with 5-star distribution histograms, the community discussion forum with verified instructor response identification, the zero-dependency CSS variable theme engine, and the 10-stage automated integration test harness.
 </p>
 
-<h2 class="section-title">5.4 Team Contribution Matrix &amp; Git Repository Commit Topology</h2>
+<h2 class="section-title">5.4 Detailed Subsystem Contribution Matrix</h2>
 <div class="avoid-break">
   <table>
     <thead>
@@ -778,10 +778,16 @@ Md. Rofaz Hasan Rafiu engineered the peer review module with 5-star distribution
   <div class="table-caption">Table 5.1: Detailed Subsystem Contribution Matrix</div>
 </div>
 
-<div class="figure-card" style="margin-top: 6px;">
-  <img src="figures/git_commits_history.jpg" alt="Git Commits History" style="max-height: 240px; width: auto; max-width: 100%;">
-  <div class="figure-caption"><strong>Figure 5.2:</strong> Genuine Git Repository History: Commit topology showing chronological contributions from Talha Jubair (Member 2) and Md. Rofaz Hasan Rafiu (Member 3), author metrics, and clean working tree.</div>
-</div>
+<h2 class="section-title" style="margin-top: 10px;">5.5 Software Integration Architecture &amp; Cross-Module Contracts</h2>
+<p>
+To ensure seamless interoperability among subsystems developed by individual team members without architectural friction or code regression, LearnHub implements strict contract-driven separation of concerns:
+</p>
+<ul>
+  <li><strong>Contract-Driven REST Interfaces</strong>: Modules interact solely via documented HTTP/JSON contracts. Member 2's sequential lesson progression atomically updates student progress, which directly triggers Member 1's graduation criteria audit without tight database coupling.</li>
+  <li><strong>Database Constraint Harmonization</strong>: The persistence layer enforces relational foreign key constraints (<code>ON DELETE CASCADE</code>) across user accounts, enrollments, assessments, certificates, reviews, and community threads, preventing orphaned records.</li>
+  <li><strong>System-Wide Theme Orchestration</strong>: Member 3's reactive dual-theme engine injects semantic CSS design tokens at the root DOM layer, allowing all views created across Member 1 and Member 2 modules to automatically inherit consistent dark/light visual palettes.</li>
+  <li><strong>Comprehensive Dual Verification Harness</strong>: Quality assurance is enforced through end-to-end integration test suites and Google Test (GTest) C++ suites verifying grading logic, certificate tokens, and review statistical calculations.</li>
+</ul>
 
 <!-- ================= PAGE 9: VISUAL SHOWCASE PART 1 ================= -->
 <div class="page-break"></div>

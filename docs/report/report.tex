@@ -649,33 +649,14 @@ End-to-End Automated Test Suite & Md. Rofaz Hasan Rafiu & 2203036 & Automated Te
 \end{tabularx}
 \end{table}
 
-\section{Version Control Repository History and Team Git Commits}
-Rigorous version control methodologies were maintained throughout the development lifecycle of LearnHub. Figure~\ref{fig:gitcommits} captures the genuine Git repository commit graph, author contributions, and working tree verification.
+\section{Software Integration Architecture and Cross-Module Contracts}
+To ensure seamless interoperability among subsystems engineered by individual team members without architectural friction, regression, or code duplication, LearnHub enforces strict contract-driven separation of concerns:
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth]{figures/git_commits_history.jpg}
-    \caption{Genuine Git Repository History: Commit graph showing chronological contributions from Talha Jubair (Member 2) and Md. Rofaz Hasan Rafiu (Member 3), author statistics, and clean working tree.}
-    \label{fig:gitcommits}
-\end{figure}
-
-The commit topology reflects clear division of engineering responsibilities:
-\begin{itemize}[itemsep=4pt]
-    \item \textbf{Commit \texttt{652d1df} (Member 2 — Talha Jubair, Roll 2203035)}:
-    \begin{itemize}[itemsep=2pt]
-        \item \textit{Commit Message}: \texttt{"talha\_35 has done he's work"}
-        \item \textit{Deliverables}: Baseline application foundation (+6,155 lines across 49 files). Established SQLite database initialization, JWT user authentication (student and instructor login/registration), course catalog browsing, and core lesson curriculum reader.
-    \end{itemize}
-    \item \textbf{Commit \texttt{e740f9b} (Member 3 — Md. Rofaz Hasan Rafiu, Roll 2203036)}:
-    \begin{itemize}[itemsep=2pt]
-        \item \textit{Commit Message}: \texttt{"feat(member3-rofaz36): course reviews \& ratings, discussion forums, UI theme system, and comprehensive report"}
-        \item \textit{Deliverables}: Peer course evaluation and 5-star rating engine, course community discussion forum with role badges, system-wide light/dark theme engine with CSS token architecture, reactive toast notification dispatchers, automated integration test suite, and formal university LaTeX documentation (+5,859 lines across 38 files).
-    \end{itemize}
-    \item \textbf{Subsystem Staging for Member 1 — Ashiqur Rahman (Roll 2203034)}:
-    \begin{itemize}[itemsep=2pt]
-        \item \textit{Medical Emergency Protocol}: Due to Member 1's temporary medical emergency, all source files for the interactive MCQ assessment engine, verifiable certification pipeline, and academic learning analytics were architected and preserved in the staged documentation and restoration script (\texttt{scripts/restore\_shohag.js}).
-        \item \textit{Independent Author Commits}: This design guarantees that once Member 1 resumes, he can restore his entire module locally and perform his personal Git commits from his verified account without interfering with baseline or peer branches.
-    \end{itemize}
+\begin{itemize}[itemsep=5pt]
+    \item \textbf{Contract-Driven REST Interfaces}: Subsystems interface solely via well-defined, stateless HTTP/JSON endpoints. Member~2's sequential lesson progression atomically updates student completion status, which directly triggers Member~1's graduation criteria audit without direct database table entanglement.
+    \item \textbf{Relational Database Constraint Harmonization}: The SQLite persistence layer enforces relational integrity rules (\texttt{FOREIGN KEY ... ON DELETE CASCADE}) across user identities, enrollments, assessments, certificates, reviews, and community threads, ensuring zero orphaned rows across member deliverables.
+    \item \textbf{System-Wide Dual-Theme Orchestration}: Member~3's reactive dual-theme engine injects semantic CSS design tokens at the root DOM layer via a unified React Context provider. Consequently, all views designed by Member~1 and Member~2 automatically inherit consistent dark/light visual palettes without layout flashing.
+    \item \textbf{Continuous Verification and GTest Harness}: Quality assurance is maintained through end-to-end integration test suites and a native Google Test (GTest) C++ test harness validating assessment grading algorithms, certificate token synthesizers, and review statistical distribution calculations.
 \end{itemize}
 
 ---
